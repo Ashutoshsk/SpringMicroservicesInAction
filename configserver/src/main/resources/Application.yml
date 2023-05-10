@@ -10,6 +10,7 @@ spring:
         native:
           search-locations: classpath:/config
         git:
-          uri:
+          uri: https://github.com/Ashutoshsk/SpringMicroservicesInAction.git
+          searchPaths: GIT_REPOSITORY_FOR_CLOUD_CONFIG/config
 server:
   port: 8071
