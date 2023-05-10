@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "licensing-service"
+		},
+		{
+			"name": "configserver",
+			"path": "configserver"
+		}
+	],
+	"settings": {
+		"java.compile.nullAnalysis.mode": "automatic",
+		"java.configuration.updateBuildConfiguration": "automatic"
+	}
+}
