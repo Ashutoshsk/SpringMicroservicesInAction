@@ -4,10 +4,8 @@ import com.spma.organizationservice.model.Organization;
 import com.spma.organizationservice.repository.OrganizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 import java.util.UUID;
-
 
 @Service
 public class OrganizationService {
@@ -24,7 +22,6 @@ public class OrganizationService {
         organization.setId(UUID.randomUUID().toString());
         organization = repository.save(organization);
         return organization;
-
     }
 
     public void update(Organization organization) {

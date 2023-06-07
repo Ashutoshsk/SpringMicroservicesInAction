@@ -1,13 +1,15 @@
 package com.spma.licensingservice.model;
 
-import org.springframework.hateoas.RepresentationModel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.hateoas.RepresentationModel;
 
-@Getter @Setter @ToString
+@Getter
+@Setter
+@ToString
 public class Organization extends RepresentationModel<Organization> {
-	String id;
+    String id;
     String name;
     String contactName;
     String contactEmail;

@@ -1,9 +1,11 @@
 package com.spma.licensingservice.model.utils;
 
+import lombok.*;
 import org.springframework.http.HttpStatus;
 import java.util.ArrayList;
 import static java.util.Arrays.asList;
 
+@Data
 public class RestErrorList extends ArrayList<ErrorMessage> {
 
 	private static final long serialVersionUID = -721424777198115589L;
@@ -17,13 +19,5 @@ public class RestErrorList extends ArrayList<ErrorMessage> {
 		super();
 		this.status = HttpStatus.valueOf(status);
 		addAll(asList(errors));
-	}
-
-	public HttpStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(HttpStatus status) {
-		this.status = status;
 	}
 }
