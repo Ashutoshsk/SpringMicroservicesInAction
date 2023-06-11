@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface OrganizationRepository extends CrudRepository<Organization, String> {
     public Optional<Organization> findById(String organizationId);
+
+    public void deleteById(String organizationId);
 }

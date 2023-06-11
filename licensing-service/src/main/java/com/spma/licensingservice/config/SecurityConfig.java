@@ -1,15 +1,17 @@
-package com.spma.organizationservice.config;
+package com.spma.licensingservice.config;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.context.annotation.Scope;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-import com.spma.organizationservice.config.JwtAuthConverter;
+import org.springframework.web.reactive.function.client.WebClient;
+
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -31,5 +33,11 @@ public class SecurityConfig {
         return http.build();
     }
 
-
+    @Bean
+    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public WebClient keycloakWebClient() {
+        return WebClient.builder()
+                .clientConnector(new ReactorClientHttpConnector())
+                .build();
+    }
 }

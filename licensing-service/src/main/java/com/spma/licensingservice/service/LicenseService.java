@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -28,7 +27,6 @@ import java.util.concurrent.TimeoutException;
 
 @Service
 public class LicenseService {
-
     private static final Logger logger = LoggerFactory.getLogger(LicenseService.class);
     @Autowired
     MessageSource messages;
@@ -46,6 +44,7 @@ public class LicenseService {
 
     @Autowired
     OrganizationWebClientClient organizationWebClient;
+
     @Autowired
     private LicenseRepository licenseRepository;
 
@@ -56,7 +55,7 @@ public class LicenseService {
                     null, null), licenseId, organizationId));
         }
 
-        Organization organization = retrieveOrganizationInfo(organizationId, clientType);
+        Organization organization = retrieveOrganizationInfo(organizationId, "webclient");
         if (null != organization) {
             license.setOrganizationName(organization.getName());
             license.setContactName(organization.getContactName());

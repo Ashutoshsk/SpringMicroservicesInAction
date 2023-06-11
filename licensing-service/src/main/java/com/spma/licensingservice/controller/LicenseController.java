@@ -45,6 +45,11 @@ public class LicenseController {
         return licenseService.getLicense(licenseId, organizationId, clientType);
     }
 
+    @RequestMapping(value = "/hello", method = RequestMethod.GET)
+    public String hello(){
+        return "hello";
+    }
+
     @PutMapping
     public ResponseEntity<License> updateLicense(@RequestBody License request) {
         return ResponseEntity.ok(licenseService.updateLicense(request));
