@@ -3,7 +3,6 @@ package com.spma.organizationservice.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -24,7 +23,8 @@ public class UserContextFilter implements Filter {
         UserContextHolder.getContext().setAuthToken(httpServletRequest.getHeader(UserContext.AUTH_TOKEN));
         UserContextHolder.getContext().setOrgId(httpServletRequest.getHeader(UserContext.ORG_ID));
 
-        logger.debug("Organization Service Incoming Correlation id: {}", UserContextHolder.getContext().getCorrelationId());
+        logger.debug("Organization Service Incoming Correlation id: {}",
+                UserContextHolder.getContext().getCorrelationId());
         filterChain.doFilter(httpServletRequest, servletResponse);
     }
 

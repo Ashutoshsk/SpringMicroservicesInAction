@@ -1,6 +1,9 @@
 package com.spma.licensingservice;
 
+import com.spma.licensingservice.events.model.OrganizationChangeModel;
 import com.spma.licensingservice.utils.UserContextInterceptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -17,6 +20,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Consumer;
 
 @SpringBootApplication
 @EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL)
@@ -25,44 +29,53 @@ import java.util.Locale;
 @EnableFeignClients
 public class LicensingServiceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(LicensingServiceApplication.class, args);
-	}
+    private static final Logger logger = LoggerFactory.getLogger(LicensingServiceApplication.class);
 
-	@Bean
-	public SessionLocaleResolver localeResolver() {
-		SessionLocaleResolver locale_Resolver = new SessionLocaleResolver();
-		locale_Resolver.setDefaultLocale(Locale.US);
-		return locale_Resolver;
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(LicensingServiceApplication.class, args);
+    }
 
-	@Bean
-	public ResourceBundleMessageSource messageSource() {
-		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-		messageSource.setUseCodeAsDefaultMessage(true);
-		messageSource.setBasenames("messages");
-		return messageSource;
-	}
+//    @Bean
+//    public Consumer<OrganizationChangeModel> loggerSink() {
+//        return orgChange -> {
+//            logger.debug("Received an {} event for organization id {}",
+//                    orgChange.getAction(), orgChange.getOrganizationId());
+//        };
+//    }
 
-	@SuppressWarnings("unchecked")
-	@LoadBalanced
-	@Bean
-	public RestTemplate getRestTemplate(){
-		RestTemplate template = new RestTemplate();
-		List interceptors = template.getInterceptors();
-		if (interceptors==null){
-			template.setInterceptors(Collections.singletonList(new UserContextInterceptor()));
-		}
-		else{
-			interceptors.add(new UserContextInterceptor());
-			template.setInterceptors(interceptors);
-		}
-		return template;
-	}
+    @Bean
+    public SessionLocaleResolver localeResolver() {
+        SessionLocaleResolver locale_Resolver = new SessionLocaleResolver();
+        locale_Resolver.setDefaultLocale(Locale.US);
+        return locale_Resolver;
+    }
 
-	@LoadBalanced
-	@Bean
-	public WebClient webClient() {
-		return WebClient.create();
-	}
+    @Bean
+    public ResourceBundleMessageSource messageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setUseCodeAsDefaultMessage(true);
+        messageSource.setBasenames("messages");
+        return messageSource;
+    }
+
+    @SuppressWarnings("unchecked")
+    @LoadBalanced
+    @Bean
+    public RestTemplate getRestTemplate() {
+        RestTemplate template = new RestTemplate();
+        List interceptors = template.getInterceptors();
+        if (interceptors == null) {
+            template.setInterceptors(Collections.singletonList(new UserContextInterceptor()));
+        } else {
+            interceptors.add(new UserContextInterceptor());
+            template.setInterceptors(interceptors);
+        }
+        return template;
+    }
+
+    @LoadBalanced
+    @Bean
+    public WebClient webClient() {
+        return WebClient.create();
+    }
 }
