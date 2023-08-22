@@ -14,7 +14,7 @@ public class OrganizationController {
     @Autowired
     private OrganizationService service;
 
-    @PreAuthorize("hasAnyRole('ostock-admin','ostock-user','OADMIN', 'OUSER')")
+    @PreAuthorize("hasAnyRole('ostock-admin','ostock-user','ADMIN', 'USER')")
     @RequestMapping(value = "/{organizationId}", method = RequestMethod.GET)
     public ResponseEntity<Organization> getOrganization(@PathVariable("organizationId") String organizationId) {
         return ResponseEntity.ok(service.findById(organizationId));

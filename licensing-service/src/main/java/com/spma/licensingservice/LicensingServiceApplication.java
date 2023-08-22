@@ -1,16 +1,21 @@
 package com.spma.licensingservice;
 
-import com.spma.licensingservice.events.model.OrganizationChangeModel;
+
 import com.spma.licensingservice.utils.UserContextInterceptor;
+import feign.Capability;
+import feign.micrometer.MicrometerCapability;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.web.client.RestTemplate;
@@ -43,6 +48,12 @@ public class LicensingServiceApplication {
 //        };
 //    }
 
+
+
+    @Bean
+    public Capability capability(final MeterRegistry registry) {
+        return new MicrometerCapability(registry);
+    }
     @Bean
     public SessionLocaleResolver localeResolver() {
         SessionLocaleResolver locale_Resolver = new SessionLocaleResolver();
@@ -58,10 +69,33 @@ public class LicensingServiceApplication {
         return messageSource;
     }
 
-    @SuppressWarnings("unchecked")
+//    @SuppressWarnings("unchecked")
+//    @LoadBalanced
+//    @Bean
+//    public RestTemplate getRestTemplate() {
+//        RestTemplate template = new RestTemplate();
+//        List interceptors = template.getInterceptors();
+//        if (interceptors == null) {
+//            template.setInterceptors(Collections.singletonList(new UserContextInterceptor()));
+//        } else {
+//            interceptors.add(new UserContextInterceptor());
+//            template.setInterceptors(interceptors);
+//        }
+//        return template;
+//    }
+
+//    @LoadBalanced
+//    @Bean
+//    public RestTemplate getRestTemplate(RestTemplateBuilder builder) {
+//        RestTemplate template = builder.build();
+//        template.getInterceptors().add(new UserContextInterceptor());
+//        return template;
+//    }
+
     @LoadBalanced
+    @Primary
     @Bean
-    public RestTemplate getRestTemplate() {
+    public RestTemplate getCustomRestTemplate() {
         RestTemplate template = new RestTemplate();
         List interceptors = template.getInterceptors();
         if (interceptors == null) {
@@ -70,9 +104,9 @@ public class LicensingServiceApplication {
             interceptors.add(new UserContextInterceptor());
             template.setInterceptors(interceptors);
         }
+
         return template;
     }
-
     @LoadBalanced
     @Bean
     public WebClient webClient() {

@@ -1,6 +1,5 @@
 package com.spma.organizationservice.service;
 
-import com.spma.organizationservice.events.source.SimpleSourceBean;
 import com.spma.organizationservice.model.Organization;
 import com.spma.organizationservice.repository.OrganizationRepository;
 import com.spma.organizationservice.utils.ActionEnum;
@@ -15,8 +14,7 @@ import org.slf4j.LoggerFactory;
 public class OrganizationService {
 
     private static final Logger logger = LoggerFactory.getLogger(OrganizationService.class);
-    @Autowired
-    SimpleSourceBean simpleSourceBean;
+
     @Autowired
     private OrganizationRepository repository;
 
@@ -37,12 +35,12 @@ public class OrganizationService {
 
     public void update(Organization organization) {
         repository.save(organization);
-        simpleSourceBean.publishOrganizationChange("UPDATE", organization.getId());
+
     }
 
     public void delete(String organizationId) {
         repository.deleteById(organizationId);
-        simpleSourceBean.publishOrganizationChange("DELETE", organizationId);
+
     }
 
     @SuppressWarnings("unused")

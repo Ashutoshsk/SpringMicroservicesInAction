@@ -41,42 +41,105 @@ services:
         aliases:
           - "keycloak"
 
-  zookeeper:
-    image: wurstmeister/zookeeper:latest
+#  zookeeper:
+#    image: wurstmeister/zookeeper:latest
+#    ports:
+#      - 2181:2181
+#    networks:
+#      backend:
+#        aliases:
+#          - "zookeeper"
+#
+#  kafkaserver:
+#    image: wurstmeister/kafka:latest
+#    ports:
+#      - 9092:9092
+#    environment:
+#      - KAFKA_ADVERTISED_HOST_NAME=kafka
+#      - KAFKA_ADVERTISED_PORT=9092
+#      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+#      - KAFKA_CREATE_TOPICS=dresses:1:1,ratings:1:1
+#    volumes:
+#      - "/var/run/docker.sock:/var/run/docker.sock"
+#    depends_on:
+#      - zookeeper
+#    networks:
+#      backend:
+#        aliases:
+#          - "kafka"
+#
+#  redisserver:
+#    image: redis:alpine
+#    ports:
+#      - 6379:6379
+#    networks:
+#      backend:
+#        aliases:
+#          - "redis"
+  zipkin:
+    image: openzipkin/zipkin:latest
     ports:
-      - 2181:2181
-    networks:
-      backend:
-        aliases:
-          - "zookeeper"
+      - 9411:9411
 
-  kafkaserver:
-    image: wurstmeister/kafka:latest
-    ports:
-      - 9092:9092
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
+    container_name: elasticsearch
     environment:
-      - KAFKA_ADVERTISED_HOST_NAME=kafka
-      - KAFKA_ADVERTISED_PORT=9092
-      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
-      - KAFKA_CREATE_TOPICS=dresses:1:1,ratings:1:1
+      - node.name=elasticsearch
+      - discovery.type=single-node
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
-    depends_on:
-      - zookeeper
-    networks:
-      backend:
-        aliases:
-          - "kafka"
-
-  redisserver:
-    image: redis:alpine
+      - esdata1:/usr/share/elasticsearch/data
+      - es_certs:/usr/share/elasticsearch/config/certs
     ports:
-      - 6379:6379
+      - 9300:9300
+      - 9200:9200
     networks:
       backend:
         aliases:
-          - "redis"
+          - "elasticsearch"
 
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.15.0
+    container_name: logstash
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    volumes:
+      - ./config:/etc/logstash/conf.d
+    ports:
+      - "5000:5000"
+    depends_on:
+      - elasticsearch
+    networks:
+      backend:
+        aliases:
+          - "logstash"
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.15.0
+    container_name: kibana
+    environment:
+      ELASTICSEARCH_URL: "http://elasticsearch:9300"
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+    networks:
+      backend:
+        aliases:
+          - "kibana"
+
+volumes:
+  esdata1:
+    driver: local
+  es_certs:
+    driver: local
 networks:
   backend:
     driver: bridge
