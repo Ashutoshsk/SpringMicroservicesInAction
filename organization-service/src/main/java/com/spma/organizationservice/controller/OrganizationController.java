@@ -20,19 +20,19 @@ public class OrganizationController {
         return ResponseEntity.ok(service.findById(organizationId));
     }
 
-    @PreAuthorize("hasAnyRole('ostock-admin','ostock-user','OADMIN', 'OUSER')")
+    @PreAuthorize("hasAnyRole('ostock-admin','ostock-user','ADMIN', 'USER')")
     @RequestMapping(value = "/{organizationId}", method = RequestMethod.PUT)
     public void updateOrganization(@PathVariable("organizationId") String id, @RequestBody Organization organization) {
         service.update(organization);
     }
 
-    @PreAuthorize("hasAnyRole('ostock-admin','ostock-user','OADMIN', 'OUSER')")
+    @PreAuthorize("hasAnyRole('ostock-admin','ostock-user','ADMIN', 'USER')")
     @PostMapping
     public ResponseEntity<Organization> saveOrganization(@RequestBody Organization organization) {
         return ResponseEntity.ok(service.create(organization));
     }
 
-    @PreAuthorize("hasAnyRole('ostock-admin','OADMIN')")
+    @PreAuthorize("hasAnyRole('ostock-admin','ADMIN')")
     @RequestMapping(value = "/{organizationId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteOrganization(@PathVariable("organizationId") String organizationId) {

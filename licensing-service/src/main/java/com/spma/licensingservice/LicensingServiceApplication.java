@@ -1,12 +1,14 @@
 package com.spma.licensingservice;
 
 
+import com.spma.licensingservice.events.model.OrganizationChangeModel;
 import com.spma.licensingservice.utils.UserContextInterceptor;
 import feign.Capability;
 import feign.micrometer.MicrometerCapability;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -40,15 +42,14 @@ public class LicensingServiceApplication {
         SpringApplication.run(LicensingServiceApplication.class, args);
     }
 
-//    @Bean
-//    public Consumer<OrganizationChangeModel> loggerSink() {
-//        return orgChange -> {
-//            logger.debug("Received an {} event for organization id {}",
-//                    orgChange.getAction(), orgChange.getOrganizationId());
-//        };
-//    }
+    @Bean
+    public Consumer<OrganizationChangeModel> loggerSink() {
 
-
+        return orgChange -> {
+            logger.info("Received an {} event for organization id {}",
+                    orgChange.getAction(), orgChange.getOrganizationId());
+        };
+    }
 
     @Bean
     public Capability capability(final MeterRegistry registry) {
@@ -69,28 +70,6 @@ public class LicensingServiceApplication {
         return messageSource;
     }
 
-//    @SuppressWarnings("unchecked")
-//    @LoadBalanced
-//    @Bean
-//    public RestTemplate getRestTemplate() {
-//        RestTemplate template = new RestTemplate();
-//        List interceptors = template.getInterceptors();
-//        if (interceptors == null) {
-//            template.setInterceptors(Collections.singletonList(new UserContextInterceptor()));
-//        } else {
-//            interceptors.add(new UserContextInterceptor());
-//            template.setInterceptors(interceptors);
-//        }
-//        return template;
-//    }
-
-//    @LoadBalanced
-//    @Bean
-//    public RestTemplate getRestTemplate(RestTemplateBuilder builder) {
-//        RestTemplate template = builder.build();
-//        template.getInterceptors().add(new UserContextInterceptor());
-//        return template;
-//    }
 
     @LoadBalanced
     @Primary
