@@ -25,12 +25,11 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ResponseWrapper> handleIOException(HttpServletRequest request, RuntimeException e) {
+    public ResponseEntity<ResponseWrapper> handleIOException(HttpServletRequest request, RuntimeException e){
 
-        RestErrorList errorList = new RestErrorList(HttpStatus.NOT_ACCEPTABLE,
-                new ErrorMessage(e.getMessage(), e.getMessage()));
-        ResponseWrapper responseWrapper = new ResponseWrapper(null, singletonMap("status", HttpStatus.NOT_ACCEPTABLE),
-                errorList);
+        RestErrorList errorList = new RestErrorList(HttpStatus.NOT_ACCEPTABLE, new ErrorMessage(e.getMessage(), e.getMessage()));
+        ResponseWrapper responseWrapper = new ResponseWrapper(null, singletonMap("status", HttpStatus.NOT_ACCEPTABLE), errorList);
+
 
         return ResponseEntity.ok(responseWrapper);
     }

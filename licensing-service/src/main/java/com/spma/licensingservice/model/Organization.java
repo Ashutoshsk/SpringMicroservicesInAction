@@ -1,14 +1,18 @@
 package com.spma.licensingservice.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.*;
+import org.springframework.data.redis.core.RedisHash;
 import org.springframework.hateoas.RepresentationModel;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString
+@RedisHash("organization")
 public class Organization extends RepresentationModel<Organization> {
+    @Id
     String id;
     String name;
     String contactName;

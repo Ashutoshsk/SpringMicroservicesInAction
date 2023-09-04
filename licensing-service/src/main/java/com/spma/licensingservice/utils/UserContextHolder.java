@@ -2,6 +2,7 @@ package com.spma.licensingservice.utils;
 
 import org.springframework.util.Assert;
 
+
 public class UserContextHolder {
     private static final ThreadLocal<UserContext> userContext = new ThreadLocal<UserContext>();
 

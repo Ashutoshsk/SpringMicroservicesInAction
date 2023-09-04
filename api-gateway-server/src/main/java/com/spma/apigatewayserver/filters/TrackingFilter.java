@@ -48,11 +48,7 @@ public class TrackingFilter implements GlobalFilter {
 			exchange = filterUtils.setCorrelationId(exchange, correlationID);
 			logger.debug("tmx-correlation-id generated in tracking filter: {}.", correlationID);
 		}
-
 		System.out.println("The authentication name from the token is : " + getUsername(requestHeaders));
-
-
-
 		return chain.filter(exchange);
 	}
 

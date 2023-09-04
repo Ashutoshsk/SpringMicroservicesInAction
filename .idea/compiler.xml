@@ -20,7 +20,7 @@
       <module name="api-gateway-server" options="-parameters" />
       <module name="configserver" options="-parameters" />
       <module name="eurekaserver" options="-parameters" />
-      <module name="licensing-service" options="-parameters" />
+      <module name="licensing-service" options="-parameters -parameters" />
       <module name="organization-service" options="-parameters" />
     </option>
   </component>

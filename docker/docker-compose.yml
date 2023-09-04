@@ -68,7 +68,6 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     depends_on:
@@ -78,14 +77,26 @@ services:
         aliases:
           - "kafka"
 
-  redisserver:
+  redis:
     image: redis:alpine
     ports:
       - 6379:6379
+    hostname: redis
     networks:
       backend:
         aliases:
           - "redis"
+
+  redisInsight:
+    image: redislabs/redisinsight
+    container_name: redisinsight
+    ports:
+      - 8001:8001
+    links:
+      - redis
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
   zipkin:
     image: openzipkin/zipkin:latest
     ports:

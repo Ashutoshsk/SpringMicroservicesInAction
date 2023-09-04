@@ -4,7 +4,6 @@ import com.spma.licensingservice.config.ServiceConfig;
 import com.spma.licensingservice.model.License;
 import com.spma.licensingservice.model.Organization;
 import com.spma.licensingservice.repository.LicenseRepository;
-import com.spma.licensingservice.service.client.OrganizationDiscoveryClient;
 import com.spma.licensingservice.service.client.OrganizationFeignClient;
 import com.spma.licensingservice.service.client.OrganizationRestTemplateClient;
 import com.spma.licensingservice.service.client.OrganizationWebClientClient;
@@ -19,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -30,6 +30,7 @@ public class LicenseService {
     private static final Logger logger = LoggerFactory.getLogger(LicenseService.class);
     @Autowired
     MessageSource messages;
+
     @Autowired
     ServiceConfig config;
 
@@ -40,9 +41,6 @@ public class LicenseService {
     OrganizationRestTemplateClient organizationRestClient;
 
     @Autowired
-    OrganizationDiscoveryClient organizationDiscoveryClient;
-
-    @Autowired
     OrganizationWebClientClient organizationWebClient;
 
     @Autowired
@@ -51,11 +49,12 @@ public class LicenseService {
     public License getLicense(String licenseId, String organizationId, String clientType) {
         License license = licenseRepository.findByOrganizationIdAndLicenseId(organizationId, licenseId);
         if (null == license) {
-            throw new IllegalArgumentException(String.format(messages.getMessage("license.search.error.message",
-                    null, null), licenseId, organizationId));
+            String message = String.format(messages.getMessage("license.search.error.message", null, null), licenseId, organizationId);
+            logger.error(message);
+            throw new IllegalArgumentException(message);
         }
 
-        Organization organization = retrieveOrganizationInfo(organizationId, "webclient");
+        Organization organization = retrieveOrganizationInfo(organizationId, clientType);
         if (null != organization) {
             license.setOrganizationName(organization.getName());
             license.setContactName(organization.getContactName());
@@ -63,6 +62,7 @@ public class LicenseService {
             license.setContactPhone(organization.getContactPhone());
         }
 
+        logger.debug("Retrieving license information: " + license.toString());
         return license.withComment(config.getProperty());
     }
 
@@ -77,10 +77,6 @@ public class LicenseService {
             case "rest":
                 System.out.println("I am using the rest client");
                 organization = organizationRestClient.getOrganization(organizationId);
-                break;
-            case "discovery":
-                System.out.println("I am using the discovery client");
-                organization = organizationDiscoveryClient.getOrganization(organizationId);
                 break;
             case "webclient":
                 System.out.println("I am using the Web Client");
@@ -113,8 +109,8 @@ public class LicenseService {
         license.setLicenseId(licenseId);
         licenseRepository.delete(license);
         responseMessage = String.format(messages.getMessage("license.delete.message", null, null), licenseId);
+        logger.debug("Deleting license : " + responseMessage);
         return responseMessage;
-
     }
 
     @CircuitBreaker(name = "licenseService", fallbackMethod = "buildFallbackLicenseList")
