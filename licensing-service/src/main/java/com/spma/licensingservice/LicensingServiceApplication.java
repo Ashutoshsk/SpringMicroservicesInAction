@@ -1,8 +1,6 @@
 package com.spma.licensingservice;
 
-import com.spma.licensingservice.config.RedisConfiguration;
 import com.spma.licensingservice.events.model.OrganizationChangeModel;
-import com.spma.licensingservice.repository.OrganizationRedisRepository;
 import feign.Capability;
 import feign.micrometer.MicrometerCapability;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -14,14 +12,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
-import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
-import org.springframework.data.redis.serializer.RedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 

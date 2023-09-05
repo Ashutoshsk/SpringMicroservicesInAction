@@ -1,8 +1,10 @@
 package com.spma.licensingservice.model.utils;
 
-import lombok.*;
+import lombok.Data;
 import org.springframework.http.HttpStatus;
+
 import java.util.ArrayList;
+
 import static java.util.Arrays.asList;
 
 @Data

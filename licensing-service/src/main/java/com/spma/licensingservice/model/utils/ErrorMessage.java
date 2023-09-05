@@ -1,6 +1,6 @@
 package com.spma.licensingservice.model.utils;
 
-import lombok.*;
+import lombok.Data;
 
 @Data
 public class ErrorMessage {

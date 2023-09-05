@@ -62,7 +62,7 @@ public class LicenseService {
             license.setContactPhone(organization.getContactPhone());
         }
 
-        logger.debug("Retrieving license information: " + license.toString());
+        logger.debug("Retrieving license information: " + license);
         return license.withComment(config.getProperty());
     }
 

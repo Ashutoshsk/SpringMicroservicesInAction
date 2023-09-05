@@ -18,34 +18,51 @@
 		<spring-cloud.version>2022.0.2</spring-cloud.version>
 	</properties>
 	<dependencies>
+		<!-- Spring Boot Starters -->
+
+		<!-- Monitor and manage your application -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
+
+		<!-- Spring Cloud Config Server -->
+
+		<!-- Spring Cloud Config Server for centralized configuration management -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-config-server</artifactId>
 		</dependency>
 
+		<!-- Spring Boot DevTools (runtime scope, optional) -->
+
+		<!-- Spring Boot DevTools for development-time tools -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+
+		<!-- Project Lombok (optional) -->
+
+		<!-- Project Lombok for simplifying Java code with annotations -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+
+		<!-- Spring Boot Starter Test (test scope) -->
+
+		<!-- Spring Boot Starter Test for unit testing and integration testing (test scope) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+	</dependencies>
 
-
-    </dependencies>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

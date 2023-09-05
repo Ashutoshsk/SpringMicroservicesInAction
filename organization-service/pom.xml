@@ -19,140 +19,171 @@
     </properties>
     <dependencies>
         <!-- Spring Boot Starters -->
+
+        <!-- Monitor and manage your application -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId> <!-- Monitor and manage your application -->
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+
+        <!-- JPA repository support -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId> <!-- JPA repository support -->
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+
+        <!-- Additional validation support -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId> <!-- Additional validation support -->
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
+
+        <!-- Support for HATEOAS-based RESTful APIs -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-hateoas</artifactId> <!-- Support for HATEOAS-based RESTful APIs -->
+            <artifactId>spring-boot-starter-hateoas</artifactId>
         </dependency>
+
+        <!-- Build web applications using Spring MVC -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId> <!-- Build web applications using Spring MVC -->
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <!-- Development tools (runtime) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+
+        <!-- Unit testing and integration testing (test scope) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId> <!-- Unit testing and integration testing -->
+            <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
 
         <!-- Spring Cloud -->
+
+        <!-- Externalized configuration management -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-config</artifactId> <!-- Externalized configuration management -->
+            <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
+
+        <!-- Service registration and discovery (Eureka) -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client
-            </artifactId> <!-- Service registration and discovery (Eureka) -->
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
+
+        <!-- Circuit breaker (Resilience4j) -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-circuitbreaker-resilience4j
-            </artifactId> <!-- Circuit breaker (Resilience4j) -->
+            <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
         </dependency>
 
         <!-- Servlet API and Database -->
+
+        <!-- Java Servlet API -->
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId> <!-- Java Servlet API -->
+            <artifactId>javax.servlet-api</artifactId>
             <version>4.0.1</version>
         </dependency>
+
+        <!-- PostgreSQL JDBC driver (runtime) -->
         <dependency>
             <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId> <!-- PostgreSQL JDBC driver -->
+            <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Lombok -->
+        <!-- Lombok (optional) -->
+
+        <!-- Simplify Java code with annotations (optional) -->
         <dependency>
             <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId> <!-- Simplify Java code (annotations) -->
+            <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
 
         <!-- OpenAPI/Swagger Documentation -->
+
+        <!-- OpenAPI/Swagger support (API documentation) -->
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-api
-            </artifactId> <!-- OpenAPI/Swagger support (API documentation) -->
+            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
             <version>2.1.0</version>
         </dependency>
+
+        <!-- OpenAPI/Swagger UI support -->
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId> <!-- OpenAPI/Swagger UI support -->
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.1.0</version>
         </dependency>
 
         <!-- Spring Security and OAuth2 -->
+
+        <!-- Basic security support -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId> <!-- Basic security support -->
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+
+        <!-- OAuth2 resource server support -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId> <!-- OAuth2 resource server support -->
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
         </dependency>
+
+        <!-- OAuth2 client support -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-client</artifactId> <!-- OAuth2 client support -->
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-stream</artifactId>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-stream-kafka</artifactId>-->
-<!--        </dependency>-->
-
-        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-bus-kafka -->
+        <!-- Spring Cloud Bus Kafka -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bus-kafka</artifactId>
             <version>4.0.1</version>
         </dependency>
 
+        <!-- Micrometer and Zipkin (Tracing) Dependencies -->
+
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-observation</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-tracing-bridge-brave</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.zipkin.reporter2</groupId>
             <artifactId>zipkin-reporter-brave</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/io.github.openfeign/feign-micrometer -->
+
+        <!-- Feign Micrometer (optional) -->
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-micrometer</artifactId>
         </dependency>
+
+        <!-- Spring Security OAuth2 Client (version 6.1.2) -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-oauth2-client</artifactId>
             <version>6.1.2</version>
         </dependency>
     </dependencies>
+
     <dependencyManagement>
         <dependencies>
             <dependency>

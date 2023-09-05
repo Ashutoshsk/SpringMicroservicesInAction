@@ -36,7 +36,7 @@ public class OrganizationService {
                 logger.error(message);
                 throw new IllegalArgumentException(message);
             }
-            logger.debug("Retrieving Organization Info: " + opt.get().toString());
+            logger.debug("Retrieving Organization Info: " + opt.get());
         } finally {
             newSpan.tag("peer.service", "postgres");
             newSpan.annotate("Client received");

@@ -1,9 +1,5 @@
 package com.spma.organizationservice.utils;
 
-import lombok.*;
-import org.springframework.stereotype.Component;
-import org.springframework.http.HttpHeaders;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 

@@ -1,11 +1,11 @@
 package com.spma.licensingservice.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.springframework.hateoas.RepresentationModel;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.hateoas.RepresentationModel;
 
 @Getter @Setter @ToString
 @Entity

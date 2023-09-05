@@ -18,32 +18,50 @@
 		<spring-cloud.version>2022.0.2</spring-cloud.version>
 	</properties>
 	<dependencies>
+		<!-- Spring Boot Starters -->
+
+		<!-- Monitor and manage your application -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
+
+		<!-- Spring Cloud Config Server -->
+
+		<!-- Spring Cloud Config Server for centralized configuration management -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
+
+		<!-- Spring Cloud Netflix Eureka Server -->
+
+		<!-- Spring Cloud Netflix Eureka Server for service registration and discovery -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
 		</dependency>
 
+		<!-- Spring Boot DevTools (runtime scope, optional) -->
+
+		<!-- Spring Boot DevTools for development-time tools -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+
+		<!-- Spring Boot Starter Test (test scope) -->
+
+		<!-- Spring Boot Starter Test for unit testing and integration testing (test scope) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+	</dependencies>
 
-    </dependencies>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

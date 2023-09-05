@@ -11,21 +11,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
-
-import reactor.core.publisher.Mono;
-
-import org.apache.commons.codec.binary.Base64;
-import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.gateway.filter.GatewayFilterChain;
-import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpHeaders;
-import org.springframework.stereotype.Component;
-import org.springframework.web.server.ServerWebExchange;
-
 import reactor.core.publisher.Mono;
 
 @Order(1)
@@ -54,11 +39,7 @@ public class TrackingFilter implements GlobalFilter {
 
 
 	private boolean isCorrelationIdPresent(HttpHeaders requestHeaders) {
-		if (filterUtils.getCorrelationId(requestHeaders) != null) {
-			return true;
-		} else {
-			return false;
-		}
+        return filterUtils.getCorrelationId(requestHeaders) != null;
 	}
 
 	private String generateCorrelationId() {
