@@ -80,7 +80,7 @@ services:
   redis:
     image: redis:alpine
     ports:
-      - 6379:6379
+      - "6379:6379"
     hostname: redis
     networks:
       backend:
@@ -91,16 +91,17 @@ services:
     image: redislabs/redisinsight
     container_name: redisinsight
     ports:
-      - 8001:8001
+      - "8001:8001"
     links:
       - redis
     environment:
       REDIS_HOST: redis
       REDIS_PORT: 6379
+
   zipkin:
     image: openzipkin/zipkin:latest
     ports:
-      - 9411:9411
+      - "9411:9411"
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
@@ -120,8 +121,8 @@ services:
       - esdata1:/usr/share/elasticsearch/data
       - es_certs:/usr/share/elasticsearch/config/certs
     ports:
-      - 9300:9300
-      - 9200:9200
+      - "9300:9300"
+      - "9200:9200"
     networks:
       backend:
         aliases:
@@ -148,13 +149,108 @@ services:
     environment:
       ELASTICSEARCH_URL: "http://elasticsearch:9300"
     ports:
-      - 5601:5601
+      - "5601:5601"
     depends_on:
       - elasticsearch
     networks:
       backend:
         aliases:
           - "kibana"
+
+  eurekaserver:
+    image: ashutoshsk/eurekaserver
+    container_name: eurekaServer
+    ports:
+      - "8070:8070"
+    depends_on:
+      database:
+        condition: service_healthy
+      configserver:
+        condition: service_started
+    networks:
+      backend:
+        aliases:
+          - "eurekaserver"
+
+  gatewayserver:
+    image: ashutoshsk/api-gateway-server
+    container_name: gateway
+    ports:
+      - "8072:8072"
+    environment:
+      PROFILE: "default"
+      SERVER_PORT: "8072"
+      CONFIGSERVER_URI: "http://configserver:8071"
+      EUREKASERVER_URI: "http://eurekaserver:8070/eureka/"
+      EUREKASERVER_PORT: "8070"
+      CONFIGSERVER_PORT: "8071"
+    depends_on:
+      database:
+        condition: service_healthy
+      configserver:
+        condition: service_started
+      eurekaserver:
+        condition: service_started
+    networks:
+      backend:
+        aliases:
+          - "gateway"
+
+  configserver:
+    image: ashutoshsk/configserver
+    container_name: configServer
+    ports:
+      - "8071:8071"
+    networks:
+      backend:
+        aliases:
+          - "configserver"
+
+  licensingservice:
+    image: ashutoshsk/licensing-service
+    container_name: licensing-service
+    environment:
+      PROFILE: "dev"
+      CONFIGSERVER_URI: "http://configserver:8071"
+      CONFIGSERVER_PORT: "8071"
+      DATABASESERVER_PORT: "5432"
+      ENCRYPT_KEY: "IMSYMMETRIC"
+      JAVA_TOOL_OPTIONS: "Djava.nio.charset=ALL-UNNAMED"
+    depends_on:
+      database:
+        condition: service_healthy
+      configserver:
+        condition: service_started
+#      authenticationservice:
+#        condition: service_started
+      kafkaserver:
+        condition: service_started
+    ports:
+      - "8081:8081"
+    networks:
+      - backend
+
+  organizationservice:
+    image: ashutoshsk/organization-service
+    container_name: organization-service
+    environment:
+      PROFILE: "dev"
+      CONFIGSERVER_URI: "http://configserver:8071"
+      CONFIGSERVER_PORT: "8071"
+      DATABASESERVER_PORT: "5432"
+      ENCRYPT_KEY: "IMSYMMETRIC"
+      JAVA_TOOL_OPTIONS: "Djava.nio.charset=ALL-UNNAMED"
+    depends_on:
+      database:
+        condition: service_healthy
+      configserver:
+        condition: service_started
+      kafkaserver:
+        condition: service_started
+    ports:
+      - "8082:8082"
+    networks:
+      - backend
 
 volumes:
   esdata1:

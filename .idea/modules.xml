@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/24_SpringMicroserviceInAction.iml" filepath="$PROJECT_DIR$/.idea/24_SpringMicroserviceInAction.iml" />
-      <module fileurl="file://$PROJECT_DIR$/configserver/configserver.iml" filepath="$PROJECT_DIR$/configserver/configserver.iml" />
-      <module fileurl="file://$PROJECT_DIR$/licensing-service/licensing-service.iml" filepath="$PROJECT_DIR$/licensing-service/licensing-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/SpringMicroservicesInAction.iml" filepath="$PROJECT_DIR$/.idea/SpringMicroservicesInAction.iml" />
     </modules>
   </component>
 </project>
