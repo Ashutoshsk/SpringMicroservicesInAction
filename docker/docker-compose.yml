@@ -1,5 +1,8 @@
 version: '3.3'
+
 services:
+
+  # PostgresSQL Database Service
   database:
     image: postgres:latest
     ports:
@@ -21,6 +24,7 @@ services:
       timeout: 5s
       retries: 5
 
+  # Keycloak Service for Identity and Access Management
   keycloak:
     image: quay.io/keycloak/keycloak:21.1.1
     ports:
@@ -41,6 +45,7 @@ services:
         aliases:
           - "keycloak"
 
+  # Apache ZooKeeper for Kafka
   zookeeper:
     image: confluentinc/cp-zookeeper:7.0.1
     container_name: zookeeper
@@ -54,6 +59,7 @@ services:
         aliases:
           - "zookeeper"
 
+  # Apache Kafka Server
   kafkaserver:
     image: confluentinc/cp-kafka:7.0.1
     hostname: kafka
@@ -77,6 +83,7 @@ services:
         aliases:
           - "kafka"
 
+  # Redis Service
   redis:
     image: redis:alpine
     ports:
@@ -87,6 +94,7 @@ services:
         aliases:
           - "redis"
 
+  # Redis Insight for Redis Visualization
   redisInsight:
     image: redislabs/redisinsight
     container_name: redisinsight
@@ -98,11 +106,13 @@ services:
       REDIS_HOST: redis
       REDIS_PORT: 6379
 
+  # Zipkin Distributed Tracing Server
   zipkin:
     image: openzipkin/zipkin:latest
     ports:
       - "9411:9411"
 
+  # Elasticsearch Service
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
     container_name: elasticsearch
@@ -128,6 +138,7 @@ services:
         aliases:
           - "elasticsearch"
 
+  # Logstash Service for Log Processing
   logstash:
     image: docker.elastic.co/logstash/logstash:7.15.0
     container_name: logstash
@@ -143,6 +154,7 @@ services:
         aliases:
           - "logstash"
 
+  # Kibana Service for Elasticsearch Visualization
   kibana:
     image: docker.elastic.co/kibana/kibana:7.15.0
     container_name: kibana
@@ -157,6 +169,7 @@ services:
         aliases:
           - "kibana"
 
+  # Eureka Server for Service Discovery
   eurekaserver:
     image: ashutoshsk/eurekaserver
     container_name: eurekaServer
@@ -172,6 +185,7 @@ services:
         aliases:
           - "eurekaserver"
 
+  # API Gateway Server
   gatewayserver:
     image: ashutoshsk/api-gateway-server
     container_name: gateway
@@ -196,6 +210,7 @@ services:
         aliases:
           - "gateway"
 
+  # Config Server for Centralized Configuration Management
   configserver:
     image: ashutoshsk/configserver
     container_name: configServer
@@ -206,6 +221,7 @@ services:
         aliases:
           - "configserver"
 
+  # Licensing Service
   licensingservice:
     image: ashutoshsk/licensing-service
     container_name: licensing-service
@@ -221,8 +237,6 @@ services:
         condition: service_healthy
       configserver:
         condition: service_started
-#      authenticationservice:
-#        condition: service_started
       kafkaserver:
         condition: service_started
     ports:
@@ -230,6 +244,7 @@ services:
     networks:
       - backend
 
+  # Organization Service
   organizationservice:
     image: ashutoshsk/organization-service
     container_name: organization-service
@@ -257,6 +272,7 @@ volumes:
     driver: local
   es_certs:
     driver: local
+
 networks:
   backend:
     driver: bridge
