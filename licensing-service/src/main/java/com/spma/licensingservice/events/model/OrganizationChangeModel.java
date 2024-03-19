@@ -15,7 +15,7 @@ public class OrganizationChangeModel {
         super();
     }
 
-    public  OrganizationChangeModel(String type, String action, String organizationId, String correlationId) {
+    public OrganizationChangeModel(String type, String action, String organizationId, String correlationId) {
         super();
         this.type   = type;
         this.action = action;

@@ -11,7 +11,6 @@ public class UserContextHolder {
         if (context == null) {
             context = createEmptyContext();
             userContext.set(context);
-
         }
         return userContext.get();
     }
